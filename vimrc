@@ -4,9 +4,6 @@ set nocompatible
 " Disable swap files
 set noswapfile
 
-" Change Leader to ,
-let mapleader = ","
-
 " Enable type file detection. Vim will be able to try to detect the type of file in use.
 filetype on
 
@@ -22,27 +19,6 @@ syntax on
 " Set the leader key to a comma.
 let mapleader = ","
 
-" Setup for coc.nvim (works in Vim 8+ with proper setup)
-set splitright
-nmap <silent> gv :vsp<CR><Plug>(coc-definition)
-nmap <silent> gd :call CocAction('jumpDefinition')<CR>
-nmap <silent> gn :call CocAction('jumpDefinition', 'tabe')<CR>
-noremap <c-o> :CocOutline<CR>
-nmap <leader>rn <Plug>(coc-rename)
-
-" Open coc references
-nmap <leader>r <Plug>(coc-references)
-nnoremap <silent> <c-y>  :<C-u>CocList -A --normal yank<cr>
-let g:coc_global_extensions = ['coc-pyright', 'coc-yank', 'coc-clangd', 'coc-yaml', 'coc-pairs', 'coc-cmake', 'coc-vimlsp','coc-prettier','coc-marketplace', 'coc-vimtex', 'coc-markdown-preview-enhanced', 'coc-prettier'] 
-
-" Make <CR> to accept selected completion item or notify coc.nvim to format
-" <C-g>u breaks current undo, please make your own choice.
-if has('patch-8.1.1068')
-  inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-        \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-else
-  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-endif
 
 " Do not save backup files.
 set nobackup
@@ -87,9 +63,6 @@ command W w
 command Q q
 command Nt NERDTreeToggle
 nnoremap gr gT
-if exists(':CocAction')
-  nnoremap <C-A-l> :call CocAction('format')<CR>
-endif
 if has('python3')
   nnoremap <C-A-o> :Isort<CR>
 else
@@ -199,10 +172,6 @@ Plug 'joshdick/onedark.vim'
 
 " Declare the list of plugins (Vim-compatible).
 Plug 'tpope/vim-fugitive'
-" CoC requires Vim 8.1+ and Node.js
-if has('patch-8.1.0') && executable('node')
-  Plug 'neoclide/coc.nvim', {'branch': 'release'}
-endif
 Plug 'tpope/vim-commentary'
 " Only install vim-isort if Python3 support is available
 if has('python3')
@@ -242,10 +211,10 @@ nmap <Leader><Leader>L <Plug>(easymotion-overwin-line)
 map  <Leader><Leader>w <Plug>(easymotion-bd-w)
 nmap <Leader><Leader>w <Plug>(easymotion-overwin-w)
 " Enhanced search
-map  / <Plug>(easymotion-sn)
-omap / <Plug>(easymotion-tn)
-map  n <Plug>(easymotion-next)
-map  N <Plug>(easymotion-prev)
+map  <Leader>/ <Plug>(easymotion-sn)
+omap <Leader>/ <Plug>(easymotion-tn)
+" map  n <Plug>(easymotion-next)
+" map  N <Plug>(easymotion-prev)
 " EasyMotion f and F integration
 map f <Plug>(easymotion-fl)
 map F <Plug>(easymotion-Fl)
