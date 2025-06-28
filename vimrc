@@ -1,4 +1,4 @@
-" Disable compatibility with vi which can cause unexpected issues
+ " Disable compatibility with vi which can cause unexpected issues
 set nocompatible
 
 " Disable swap files
@@ -33,7 +33,7 @@ nmap <leader>rn <Plug>(coc-rename)
 " Open coc references
 nmap <leader>r <Plug>(coc-references)
 nnoremap <silent> <c-y>  :<C-u>CocList -A --normal yank<cr>
-let g:coc_global_extensions = ['coc-pyright', 'coc-yank', 'coc-clangd', 'coc-yaml', 'coc-pairs', 'coc-cmake', 'coc-vimlsp','coc-prettier','coc-marketplace', 'coc-vimtex', 'coc-markdown-preview-enhanced', 'coc-prettier'] 
+let g:coc_global_extensions = ['coc-pyright', 'coc-yank', 'coc-clangd', 'coc-yaml', 'coc-pairs', 'coc-cmake', 'coc-vimlsp','coc-prettier','coc-marketplace', 'coc-vimtex', 'coc-markdown-preview-enhanced', 'coc-prettier']
 
 " Make <CR> to accept selected completion item or notify coc.nvim to format
 " <C-g>u breaks current undo, please make your own choice.
@@ -54,7 +54,7 @@ set nobackup
 :autocmd FileType cpp setlocal commentstring=//\ %s
 :autocmd FileType hpp setlocal commentstring=//\ %s
 
-"Show buffer in airline 
+"Show buffer in airline
 set showtabline=2
 
 "Shift arrow remappings
@@ -165,7 +165,7 @@ function! SortPythonImports()
     echo "No imports found"
     return
   endif
-  
+
   " Find end of imports
   let save_cursor = getpos('.')
   call cursor(import_start, 1)
@@ -173,7 +173,7 @@ function! SortPythonImports()
   while getline(import_end + 1) =~ '^\(import\|from\|\s*$\|#\)'
     let import_end += 1
   endwhile
-  
+
   " Sort the import lines
   execute import_start . ',' . import_end . 'sort'
   call setpos('.', save_cursor)
@@ -242,10 +242,9 @@ nmap <Leader><Leader>L <Plug>(easymotion-overwin-line)
 map  <Leader><Leader>w <Plug>(easymotion-bd-w)
 nmap <Leader><Leader>w <Plug>(easymotion-overwin-w)
 " Enhanced search
-map  / <Plug>(easymotion-sn)
-omap / <Plug>(easymotion-tn)
-map  n <Plug>(easymotion-next)
-map  N <Plug>(easymotion-prev)
+map  <Leader>/ <Plug>(easymotion-sn)
+omap <Leader>/ <Plug>(easymotion-tn)
+
 " EasyMotion f and F integration
 map f <Plug>(easymotion-fl)
 map F <Plug>(easymotion-Fl)
