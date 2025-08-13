@@ -22,27 +22,6 @@ syntax on
 " Set the leader key to a comma.
 let mapleader = ","
 
-" Setup for coc.nvim (works in Vim 8+ with proper setup)
-set splitright
-nmap <silent> gv :vsp<CR><Plug>(coc-definition)
-nmap <silent> gd :call CocAction('jumpDefinition')<CR>
-nmap <silent> gn :call CocAction('jumpDefinition', 'tabe')<CR>
-noremap <c-o> :CocOutline<CR>
-nmap <leader>rn <Plug>(coc-rename)
-
-" Open coc references
-nmap <leader>r <Plug>(coc-references)
-nnoremap <silent> <c-y>  :<C-u>CocList -A --normal yank<cr>
-let g:coc_global_extensions = ['coc-pyright', 'coc-yank', 'coc-clangd', 'coc-yaml', 'coc-pairs', 'coc-cmake', 'coc-vimlsp','coc-prettier','coc-marketplace', 'coc-vimtex', 'coc-markdown-preview-enhanced', 'coc-prettier']
-
-" Make <CR> to accept selected completion item or notify coc.nvim to format
-" <C-g>u breaks current undo, please make your own choice.
-if has('patch-8.1.1068')
-  inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-        \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-else
-  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-endif
 
 " Do not save backup files.
 set nobackup
@@ -87,9 +66,6 @@ command W w
 command Q q
 command Nt NERDTreeToggle
 nnoremap gr gT
-if exists(':CocAction')
-  nnoremap <C-A-l> :call CocAction('format')<CR>
-endif
 if has('python3')
   nnoremap <C-A-o> :Isort<CR>
 else
@@ -130,12 +106,6 @@ endif
 " Plugins will be downloaded under the specified directory.
 call plug#begin('~/.vim/plugged')
 
-" Speedup ctrlp
-let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
-if executable('ag')
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-endif
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/vendor/*,*/\.git/*
 
 " Custom functions
 " diff two files in new vertical split
@@ -197,31 +167,13 @@ nnoremap <C-A-f> :Ag<CR>
 
 Plug 'joshdick/onedark.vim'
 
-" Declare the list of plugins (Vim-compatible).
 Plug 'tpope/vim-fugitive'
-" CoC requires Vim 8.1+ and Node.js
-if has('patch-8.1.0') && executable('node')
-  Plug 'neoclide/coc.nvim', {'branch': 'release'}
-endif
 Plug 'tpope/vim-commentary'
-" Only install vim-isort if Python3 support is available
-if has('python3')
-  Plug 'fisadev/vim-isort'
-endif
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'preservim/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'Yggdroot/indentLine'
-Plug 'easymotion/vim-easymotion'
-
-" Vim-specific alternatives to Neovim plugins
-if !has('nvim')
-  Plug 'ctrlpvim/ctrlp.vim'
-  " Alternative to nvim-tmux-navigator for regular Vim
-  Plug 'christoomey/vim-tmux-navigator'
-endif
+Plug 'christoomey/vim-tmux-navigator'
 
 call plug#end()
 
@@ -262,20 +214,11 @@ let g:EasyMotion_use_smartsign_us = 1
 let g:EasyMotion_enter_jump_first = 0
 let g:EasyMotion_space_jump_first = 1
 
-" CtrlP configuration (for non-Neovim)
-if !has('nvim')
-  let g:ctrlp_map = '<c-p>'
-  let g:ctrlp_cmd = 'CtrlP'
-  let g:ctrlp_working_path_mode = 'ra'
-endif
 
 " IndentLine configuration
 let g:indentLine_enabled = 1
 let g:indentLine_char = '│'
 
-
-" Set colorscheme
-colorscheme onedark
 
 " Clear search highlighting
 nnoremap <Leader>l :noh<CR>
@@ -290,7 +233,6 @@ nnoremap <A-l> :vertical resize +3<CR>
 set splitbelow
 set splitright
 
-" Status line (if airline is not loaded)
 if !exists('g:loaded_airline')
   set laststatus=2
   set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}
