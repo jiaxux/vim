@@ -72,9 +72,6 @@ else
   " Alternative: Manual import sorting command for Python files
   nnoremap <C-A-o> :call SortPythonImports()<CR>
 endif
-if has('terminal')
-  tnoremap <Esc> <C-\><C-n>
-endif
 
 " Foldable setup (simplified for Vim)
 set foldmethod=indent
@@ -160,20 +157,32 @@ let g:tex_conceal='abdmg'
 " FZF setup
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+
+" FZF key bindings - add Ctrl-C and Ctrl-G as quit keys
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit',
+  \ 'ctrl-c': 'exit',
+  \ 'ctrl-g': 'exit' }
+
 nnoremap <c-P> :Files<CR>
 nnoremap <c-s-B> :Buffers<CR>
 nnoremap <c-f> :Rg<CR>
 nnoremap <C-A-f> :Ag<CR>
 
-Plug 'joshdick/onedark.vim'
+Plug 'catppuccin/vim', { 'as': 'catppuccin' }
 
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'preservim/nerdtree'
 Plug 'Yggdroot/indentLine'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'embark-theme/vim', { 'as': 'embark', 'branch': 'main' }
+Plug 'menisadi/kanagawa.vim'
 
 call plug#end()
 
@@ -182,37 +191,6 @@ nnoremap <C-n> :NERDTreeToggle<CR>
 " Close vim if NERDTree is the only window remaining
 autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 
-" EasyMotion configuration (flash.nvim alternative)
-let g:EasyMotion_do_mapping = 0 " Disable default mappings
-" Flash-like mappings for EasyMotion
-nmap s <Plug>(easymotion-overwin-f2)
-nmap S <Plug>(easymotion-overwin-t2)
-" Jump to line
-map <Leader><Leader>L <Plug>(easymotion-bd-jk)
-nmap <Leader><Leader>L <Plug>(easymotion-overwin-line)
-" Jump to word
-map  <Leader><Leader>w <Plug>(easymotion-bd-w)
-nmap <Leader><Leader>w <Plug>(easymotion-overwin-w)
-" Enhanced search
-map  <Leader>/ <Plug>(easymotion-sn)
-omap <Leader>/ <Plug>(easymotion-tn)
-
-" EasyMotion f and F integration
-map f <Plug>(easymotion-fl)
-map F <Plug>(easymotion-Fl)
-map t <Plug>(easymotion-tl)
-map T <Plug>(easymotion-Tl)
-" Bidirectional f and F (search in both directions)
-map <Leader>f <Plug>(easymotion-bd-f)
-map <Leader>F <Plug>(easymotion-bd-F)
-map <Leader>t <Plug>(easymotion-bd-t)
-map <Leader>T <Plug>(easymotion-bd-T)
-" Case insensitive and smart case
-let g:EasyMotion_smartcase = 1
-let g:EasyMotion_use_smartsign_us = 1
-" Enable prompt for single character search
-let g:EasyMotion_enter_jump_first = 0
-let g:EasyMotion_space_jump_first = 1
 
 
 " IndentLine configuration
@@ -237,3 +215,13 @@ if !exists('g:loaded_airline')
   set laststatus=2
   set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}
 endif
+
+" Cursor shape configuration
+let &t_SI = "\e[6 q"    " Use thin cursor in insert mode
+let &t_EI = "\e[2 q"    " Use block cursor in normal mode
+let &t_SR = "\e[4 q"    " Use underline cursor in replace mode
+
+" Color scheme
+set termguicolors
+let g:airline_theme = "onedark"
+colorscheme kanagawa
