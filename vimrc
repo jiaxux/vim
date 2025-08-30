@@ -166,6 +166,10 @@ let g:fzf_action = {
   \ 'ctrl-c': 'exit',
   \ 'ctrl-g': 'exit' }
 
+" Reduce ESC timeout for faster FZF exit
+set timeoutlen=1000
+set ttimeoutlen=0
+
 nnoremap <c-P> :Files<CR>
 nnoremap <c-s-B> :Buffers<CR>
 nnoremap <c-f> :Rg<CR>
